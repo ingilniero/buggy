@@ -1,6 +1,6 @@
 class App.Views.Header extends Backbone.View
 
-  className: 'navbar',
+  className: 'navbar'
 
   template: HandlebarsTemplates['app/templates/header']
 
