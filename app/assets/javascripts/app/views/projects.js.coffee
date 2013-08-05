@@ -20,7 +20,9 @@ class App.Views.Projects extends Backbone.View
     v = new App.Views.Project({ model: model })
     @$('ul').append(v.render().el)
 
-  newProject: ->
+  newProject: (e) ->
+    e.preventDefault()
+    App.Vent.trigger "project:new"
 
   addToCollection: (model) ->
     @collection.add model
