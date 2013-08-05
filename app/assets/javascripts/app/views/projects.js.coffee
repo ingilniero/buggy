@@ -7,6 +7,8 @@ class App.Views.Projects extends Backbone.View
 
   initialize: ->
     @listenTo @collection, "reset", @render
+    @listenTo App.Vent, "project:create", @addToCollection
+    @listenTo @collection, "add", @renderProject
     @collection.fetch({ reset: true })
 
   render: ->
@@ -19,3 +21,6 @@ class App.Views.Projects extends Backbone.View
     @$('ul').append(v.render().el)
 
   newProject: ->
+
+  addToCollection: (model) ->
+    @collection.add model
