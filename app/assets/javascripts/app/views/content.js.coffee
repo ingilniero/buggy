@@ -4,6 +4,9 @@ class App.Views.Content extends Backbone.View
 
   template: HandlebarsTemplates['app/templates/content']
 
+  initialize: ->
+    @listenTo App.Vent, "project:create", @swapMainEmpty
+
   render: ->
     @$el.html(@template())
     @
@@ -23,3 +26,7 @@ class App.Views.Content extends Backbone.View
   changeCurrentSideView: (v) ->
     @currentSideView.remove() if @currentSideView
     @currentSideView = v
+
+  swapMainEmpty: ->
+    @swapMain(new App.Views.Empty())
+    Backbone.history.navigate("/projects")
