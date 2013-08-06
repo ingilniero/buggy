@@ -12,3 +12,4 @@ class App.Views.Project extends Backbone.View
   showDetails: (e) ->
     e.preventDefault()
     App.Vent.trigger "project:show", @model
+    Backbone.history.navigate "/projects/" + @model.id
