@@ -4,6 +4,7 @@ class App.Views.ProjectDetails extends Backbone.View
 
   events:
     "click button.destroy": "deleteProject"
+    "click button.edit": "editProject"
 
   initialize: ->
     @listenTo @model, "sync", @render
@@ -17,3 +18,5 @@ class App.Views.ProjectDetails extends Backbone.View
     return unless confirm("Are you sure?")
     @model.destroy
       success: -> App.Vent.trigger "project:destroy"
+
+  editProject: -> App.Vent.trigger "project:edit", @model

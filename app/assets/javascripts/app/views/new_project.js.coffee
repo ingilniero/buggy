@@ -9,7 +9,7 @@ class App.Views.NewProject extends Backbone.View
     @listenTo @model, "sync", @triggerProjectCreate
 
   render: ->
-    @$el.html(@template())
+    @$el.html(@template(@model.toJSON()))
     @
 
   saveProject: (e) ->
