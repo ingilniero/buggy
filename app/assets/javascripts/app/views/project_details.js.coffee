@@ -2,6 +2,9 @@ class App.Views.ProjectDetails extends Backbone.View
 
   template: HandlebarsTemplates['app/templates/project_details']
 
+  events:
+    "click button.destroy": "deleteProject"
+
   initialize: ->
     @listenTo @model, "sync", @render
     @model.fetch()
@@ -9,3 +12,8 @@ class App.Views.ProjectDetails extends Backbone.View
   render: ->
     @$el.html(@template(@model.toJSON()))
     @
+
+  deleteProject: ->
+    return unless confirm("Are you sure?")
+    @model.destroy
+      success: -> App.Vent.trigger "project:destroy"

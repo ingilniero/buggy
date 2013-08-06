@@ -8,6 +8,7 @@ class App.Views.Content extends Backbone.View
     @listenTo App.Vent, "project:create", @swapMainEmpty
     @listenTo App.Vent, "project:new", @swapMainToNewProject
     @listenTo App.Vent, "project:show", @projectShow
+    @listenTo App.Vent, "project:destroy", @swapMainEmpty
 
   render: ->
     @$el.html(@template())
