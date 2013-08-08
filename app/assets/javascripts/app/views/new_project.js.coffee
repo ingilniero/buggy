@@ -7,6 +7,7 @@ class App.Views.NewProject extends Backbone.View
 
   initialize: ->
     @listenTo @model, "sync", @render
+    @listenTo @model, "invalid", @renderErrors
 
     @model.fetch() unless @model.isNew()
 
@@ -20,3 +21,13 @@ class App.Views.NewProject extends Backbone.View
     @model.set description: @$('#description').val()
     @model.save {},
       success: (model) -> App.Vent.trigger "project:create", model
+
+  renderErrors: (model, errors) ->
+    @$('.error').removeClass('error')
+    @$('span.help-inline').remove()
+    _.each errors, @renderError, @
+
+  renderError: (errors, attribute) ->
+    err = errors.join "; "
+    @$('#' + attribute).closest('div.control-group').addClass('error')
+    @$('#' + attribute).closest('div.controls').append('<span class="help-inline">' + err + '</span>')
