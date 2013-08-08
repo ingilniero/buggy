@@ -7,7 +7,8 @@ class App.Views.ProjectDetails extends Backbone.View
     "click button.edit": "editProject"
 
   initialize: ->
-    @listenTo @model, "sync", @render
+    @childViews = []
+    @listenTo @model, "sync", @renderDetails
     @model.fetch()
 
   render: ->
@@ -20,3 +21,10 @@ class App.Views.ProjectDetails extends Backbone.View
       success: -> App.Vent.trigger "project:destroy"
 
   editProject: -> App.Vent.trigger "project:edit", @model
+
+  renderDetails: ->
+    @$el.html(@template(@model.toJSON()))
+    v = new App.Views.Issues({ collection: @model.issues })
+    @childViews.push(v)
+    @$('#issues').html(v.render().el)
+
