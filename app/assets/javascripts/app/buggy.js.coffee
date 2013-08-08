@@ -1,4 +1,5 @@
 #= require_self
+#= require_tree ./mixins
 #= require_tree ./models
 #= require_tree ./templates
 #= require_tree ./views
@@ -8,6 +9,7 @@ window.App =
   Views: {}
   Collections: {}
   Models: {}
+  Mixins: {}
   Vent: _.clone(Backbone.Events)
 
   initialize: ->
