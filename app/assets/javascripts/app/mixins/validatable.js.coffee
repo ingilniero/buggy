@@ -1,7 +1,6 @@
 App.Mixins.Validatable =
   renderErrors: (model, errors) ->
-    @$('.error').removeClass('error')
-    @$('span.help-inline').remove()
+    @clearErrors()
     _.each errors, @renderError, @
 
   renderError: (errors, attribute) ->
@@ -14,3 +13,6 @@ App.Mixins.Validatable =
       errors = JSON.parse resp.responseText
       @renderErrors(model, errors.errors)
 
+  clearErrors: ->
+    @$('.error').removeClass('error')
+    @$('span.help-inline').remove()
