@@ -20,6 +20,7 @@ class App.Views.Issues extends Backbone.View
 
   addToCollection: (model) ->
     @collection.add(model)
+    App.Vent.trigger "issues:change", model, @collection.length
 
   updateCounter: ->
     @$('span').text(@collection.length)
