@@ -1,11 +1,12 @@
 class App.Routers.MainRouter extends Backbone.Router
 
   routes:
-    ""             : "index"
-    "projects"     : "project"
-    "projects/new" : "newProject"
-    "projects/:id" : "showProject"
+    ""                  : "index"
+    "projects"          : "project"
+    "projects/new"      : "newProject"
+    "projects/:id"      : "showProject"
     "projects/edit/:id" : "editProject"
+    "login"             : "login"
 
   initialize: ->
     @headerView = new App.Views.Header()
@@ -43,3 +44,7 @@ class App.Routers.MainRouter extends Backbone.Router
     @contentView.swapSide(new App.Views.Projects({ collection: new App.Collections.Projects }))
     m = new App.Models.Project({ id: id })
     @contentView.swapMain(new App.Views.NewProject({ model: m }))
+
+  login: ->
+    @layoutViews()
+    @contentView.swapMain(new App.Views.Login({ model: new App.Models.Login }))
