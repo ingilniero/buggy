@@ -12,6 +12,7 @@ window.App =
   Mixins: {}
   Vent: _.clone(Backbone.Events)
 
-  initialize: ->
+  initialize: (data) ->
+    App.currentUser = new App.Models.CurrentUser(data.current_user)
     new App.Routers.MainRouter()
     Backbone.history.start()
