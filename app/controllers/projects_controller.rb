@@ -1,6 +1,8 @@
 class ProjectsController < ApplicationController
   respond_to :json
 
+  before_action :authenticated, only: [:create]
+
   def index
     @projects = Project.all
   end
@@ -30,5 +32,11 @@ class ProjectsController < ApplicationController
   private
   def project_params
     params.require(:project).permit(:name, :description)
+  end
+
+  def authenticated
+    if cannot? :create, Project
+      render status: :forbidden, text: "Forbidden"
+    end
   end
 end

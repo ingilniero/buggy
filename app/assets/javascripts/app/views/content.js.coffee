@@ -11,6 +11,7 @@ class App.Views.Content extends Backbone.View
     @listenTo App.Vent, "project:destroy", @swapMainEmpty
     @listenTo App.Vent, "project:edit", @editProject
     @listenTo App.Vent, "user:logged_in", @swapMainEmpty
+    @listenTo App.Vent, "access_denied", @accessDenied
 
   render: ->
     @$el.html(@template())
@@ -45,3 +46,6 @@ class App.Views.Content extends Backbone.View
   editProject: (model) ->
     @swapMain(new App.Views.NewProject({ model: model }))
     Backbone.history.navigate("/projects/edit/" + model.id)
+
+  accessDenied: ->
+    @swapMain(new App.Views.AccessDenied())
