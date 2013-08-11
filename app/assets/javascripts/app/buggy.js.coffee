@@ -4,6 +4,12 @@
 #= require_tree ./templates
 #= require_tree ./views
 #= require_tree ./routers
+#
+I18n.defaultLocale = "en"
+I18n.locale = "es"
+
+Handlebars.registerHelper "t", (msg) -> I18n.t msg
+
 window.App =
   Routers: {}
   Views: {}
