@@ -1,5 +1,5 @@
 if @user
   json.id @user.id
-  json.username @user.name
+  json.username @user.username
   json.loggedIn true
 end
