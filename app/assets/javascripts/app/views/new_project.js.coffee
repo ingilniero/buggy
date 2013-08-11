@@ -6,7 +6,7 @@ class App.Views.NewProject extends Backbone.View
     "click button" : "saveProject"
 
   initialize: ->
-    @listenTo @model, "sync", @render
+    @listenTo @model, "sync", @checkForOwnership
     @listenTo @model, "invalid", @renderErrors
     @listenTo @model, "error", @parseErrorResponse
 
@@ -22,5 +22,11 @@ class App.Views.NewProject extends Backbone.View
     @model.set description: @$('#description').val()
     @model.save {},
       success: (model) -> App.Vent.trigger "project:create", model
+
+  checkForOwnership: ->
+    if @model.get('user_id') is App.currentUser.id
+      @render()
+    else
+      App.Vent.trigger "access_denied"
 
 _.extend App.Views.NewProject.prototype, App.Mixins.Validatable
