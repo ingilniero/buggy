@@ -8,7 +8,9 @@ class App.Views.ProjectDetails extends Backbone.View
 
   initialize: ->
     @childViews = []
-    @listenTo @model, "sync", @renderDetails
+    @listenTo @model, "change", @renderDetails
+    @listenTo @model, "error", @triggerAccessDenied
+    @listenTo @model, "destroy", @triggerProjectDestroy
     @model.fetch()
 
   render: ->
@@ -17,8 +19,7 @@ class App.Views.ProjectDetails extends Backbone.View
 
   deleteProject: ->
     return unless confirm("Are you sure?")
-    @model.destroy
-      success: -> App.Vent.trigger "project:destroy"
+    @model.destroy { wait: true }
 
   editProject: -> App.Vent.trigger "project:edit", @model
 
@@ -31,3 +32,7 @@ class App.Views.ProjectDetails extends Backbone.View
     v1 = new App.Views.NewIssue({ model: new App.Models.Issue({ project_id: @model.id }) })
     @childViews.push(v1)
     @$('#new_issue').html(v1.render().el)
+
+  triggerProjectDestroy: -> App.Vent.trigger "project:destroy"
+
+  triggerAccessDenied: -> App.Vent.trigger "access_denied"
