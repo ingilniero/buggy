@@ -15,7 +15,7 @@ class App.Views.Projects extends Backbone.View
     @listenTo App.Vent, "remove", @leave
 
   render: ->
-    @$el.html(@template())
+    @$el.html(@template({ authenticated: App.currentUser.get("loggedIn") }))
     @collection.forEach @renderProject, @
     @
 
